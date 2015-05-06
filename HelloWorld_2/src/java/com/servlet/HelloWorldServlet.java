@@ -6,7 +6,7 @@
 package com.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,21 +22,21 @@ public class HelloWorldServlet extends HttpServlet{
     }
     
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        PrintWriter out = response.getWriter();
-        String name = request.getParameter("name");
-        String course = request.getParameter("course");
-        String languages[] = request.getParameterValues("language");
-        String champion = request.getParameter("champ");
-        out.println("<h1>Hello "+name+"!</h1>");
-        out.println("<h2>Are you sure you will graduate "+course+"?");
-        out.println("<h3>You should learn</h3>");      
-        for(String langs : languages){
-            out.print(langs+"<br>");
-        }
-        if(champion.equals("Pacman")){            
-            out.println("<h3>Your champ is "+champion+"!</h3>");
-        }else{
-            out.println("<h3>"+champion+" cheated the Fight!</h3>");
+        String type = request.getParameter("type");
+        
+        switch (type) {
+            case "admin":
+                {
+                    RequestDispatcher rd = request.getRequestDispatcher("/admin.jsp");
+                    rd.forward(request, response);
+                    break;
+                }
+            case "user":
+                {
+                    RequestDispatcher rd = request.getRequestDispatcher("/user.jsp  ");
+                    rd.forward(request, response);
+                    break;
+                }
         }
             
     }
